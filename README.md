@@ -1,4 +1,84 @@
 ---
+## Tutorial 2
+### What I have learned today
+- Saya belajar bagaimana caranya melakukan organizing domain logic & service layer. 
+- Saya mempelajari konsep MVC dengan mempelajari tentang model dan service.
+- Saya belajar membuat sebuah model dengan konsep MVC dalam project Spring Boot.
+- Saya belajar membuat service untuk create & read data menggunakan konsep MVC dalam project Spring Boot
+
+### Pertanyaan
+1. Cobalah untuk menambahkan sebuah Agensi dengan mengakses link berikut:
+http://localhost:8080/agensi/add?idAgensi=1&namaAgensi=Papa%20APAP&alamat=Maung%20Fasilkom&noTelepon=081xxx
+
+Apa yang terjadi? Jelaskan mengapa hal tersebut dapat terjadi
+
+![img_8.png](img_8.png)
+
+Ketika mengakses link tersebut terjadi error bernama “Whitelabel Error Page”. Hal ini dikarenakan view template yang telah dicantumkan pada Controller, yaitu “add-agensi” belum dibuat sehingga Controller tidak dapat me¬ngembalikan view template tersebut dan akhirnya request mapping saat routing URL tidak dapat dilakukan. Controller tidak dapat melakukan resolving template “add-agensi” karena template belum dibuat dan akhirnya menyebabkan error tersebut. 
+
+2. Menurut kamu anotasi @Autowired pada class Controller tersebut merupakan implementasi dari konsep apa? Dan jelaskan secara singkat cara kerja @Autowired tersebut dalam konteks service dan controller yang telah kamu buat
+
+Menurut saya, anotasi @Autowired pada class Controller tersebut merupakan implementasi dari konsep dependency injection pada Spring Framework. Cara kerjanya :
+1. Fitur component-scan pada Spring Framework akan melihat isi package yang kita sebutkan, lalu akan mencari class-class yang diberikan anotasi @Repository, @Service, @Controller, dan @Component, dalam hal ini adalah class TravelAgensiController. 
+2. Setelah ditemukan, Spring FrameWork akan melakukan inisialisasi terhadap class tersebut, dan melakukan dependency injection dengan cara mengisi semua kebutuhan class TravelAgensiController, dalam hal ini adalah kebutuhan untuk melakukan inisialisasi objek atau properti TravelAgensiService. 
+3. Anotasi @Autowired membuat dependency injection tidak memerlukan setter ataupun constructor injection. 
+4. Dengan anotasi @Autowired, properti TravelAgensiService akan diisikan oleh Spring dengan object bertipe-data sesuai, dalam hal ini adalah tipe data TravelAgensiService. Dengan kata lain, anotasi @Autowired ini akan melakukan inisialisasi objek TravelAgensiService untuk keperluan kebutuhan class TravelAgensiController.
+5. Objek tersebut digunakan oleh class TravelAgensiController untuk membantu bagian Controller dalam melaksanakan layanan manipulasi class TravelAgensi pada bagian Service yang berisi interface TravelAgensiService beserta class yang mengimplementasikan interface tersebut. 
+
+Sumber : https://software.endy.muhardin.com/java/memahami-dependency-injection/
+
+3. Cobalah untuk menambahkan sebuah Agensi dengan mengakses link berikut:
+http://localhost:8080/agensi/add?idAgensi=1&namaAgensi=Papa%20APAP&alamat=Maung%20Fasilkom
+
+Apa yang terjadi? Jelaskan mengapa hal tersebut dapat terjadi.
+
+![img_9.png](img_9.png)
+
+Yang terjadi ketika mengakses link tersebut adalah error bernama “Whitelabel Error Page”. Hal ini dikarenakan pada link untuk add agensi tersebut tidak mengandung parameter noTelepon (required requested parameter ‘noTelepon’). Sedangkan value noTelepon dengan tipe String merupakan salah satu value RequestParam yang diperlukan dalam melakukan RequestMapping saat routing URL untuk melakukan penambahan agensi. Maka, terjadilah error. 
+
+4. Jika Papa APAP ingin melihat Travel Agensi dengan nama Papa APAP, link apa yang harus diakses?
+http://localhost:8080/agensi/view?idAgensi=1
+
+![img_2.png](img_2.png)
+
+5. Tambahkan 1 contoh Travel Agensi lainnya sesukamu. Lalu cobalah untuk mengakses http://localhost:8080/agensi/viewAll , apa yang akan ditampilkan?
+Sertakan juga bukti screenshotmu
+
+Penambahan 1 contoh Travel Agensi bernama Zeberina, dengan ID = 23, alamat nya Batan Indah, dan nomor teleponnya 08129
+
+Yang akan ditampilkan oleh link diatas adalah daftar TravelAgensi yang ditambahkan, termasuk yang baru saja ditambahkan. 
+
+Link penambahan TravelAgensi :
+http://localhost:8080/agensi/add?idAgensi=23&namaAgensi=Zeberina&alamat=Batan%20Indah&noTelepon=08129
+
+Tampilan HTML setelah berhasil menambahkan :
+
+![img_6.png](img_6.png)
+
+Tampilan viewAll HTML setelah ditambahkan :
+
+![img_7.png](img_7.png)
+
+### Latihan
+1. Pada TravelAgensiController tambahkan sebuah method view Agensi dengan menggunakan Path Variable. Misalnya, kamu ingin memasukkan data sebuah Agensi yang memiliki idAgensi 1, untuk melihat data yang baru dimasukkan tersebut, user dapat mengakses halaman 
+http://localhost:8080/agensi/view/id-agensi/1
+
+![img_5.png](img_5.png)
+
+2. Tambahkan fitur untuk melakukan update noTelepon Agensi berdasarkan idAgensi. Misalnya, setelah melakukan add Agensi pada tahap 1 bab View Template, cobalah untuk mengubah noTelepon objek Agensi tersebut menjadi “021752xxxx” dengan mengakses halaman
+http://localhost:8080/agensi/update/id-agensi/1/no-telepon/021752xxxx
+
+Tampilkan juga sebuah halaman yang memberikan informasi bahwa data tersebut telah berhasil diubah.
+
+![img_3.png](img_3.png)
+
+4. Tambahkan fitur untuk melakukan delete Agensi berdasarkan idAgensi. Misalnya, setelah melakukan add Agensi pada tahap 1 bab View Template dan melakukan update seperti pada latihan nomor 2, cobalah untuk melakukan delete data tersebut dengan mengakses halaman http://localhost:8080/agensi/delete/id-agensi/1
+
+Tampilkan sebuah halaman yang memberikan informasi bahwa data tersebut telah berhasil dihapus
+
+![img_4.png](img_4.png)
+
+---
 
 ## Tutorial 1
 

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Halaman Error</title>
+</head>
+<body>
+<h2 th:text="'Travel Agensi dengan id Agensi ' + ${idAgensi} + ' tidak ditemukan dan proses ' + ${proses} + ' dibatalkan.'"></h2>
+<a href="/agensi/viewAll">Kembali</a>
+
+</body>
+</html>
