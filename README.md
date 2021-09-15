@@ -78,6 +78,14 @@ Tampilkan sebuah halaman yang memberikan informasi bahwa data tersebut telah ber
 
 ![img_4.png](img_4.png)
 
+### What I did not understand
+- [ ] Masih perlu memahami kode secara keseluruhan
+- [ ] Masih perlu memahami konsep MVC secara lebih mendalam
+
+(Anda dapat membuat tampilan code dalam README.md menjadi lebih baik. Cari tahu
+lebih dalam tentang penulisan README.md di GitHub pada link
+[berikut](https://help.github.com/en/articles/basic-writing-and-formatting-syntax))
+
 ---
 
 ## Tutorial 1
@@ -193,6 +201,3 @@ https://www.it-swarm-id.com/id/java/requestparam-vs-pathvariable/1070463371/
 - [ ] Saya masih belum sepenuhnya memahami apa itu Maven dan apa kegunaan dari Maven.
 - [ ] Saya masih belum paham secara keseluruhan makna dari kode-kode yang dituliskan. 
 
-(Anda dapat membuat tampilan code dalam README.md menjadi lebih baik. Cari tahu
-lebih dalam tentang penulisan README.md di GitHub pada link
-[berikut](https://help.github.com/en/articles/basic-writing-and-formatting-syntax))
