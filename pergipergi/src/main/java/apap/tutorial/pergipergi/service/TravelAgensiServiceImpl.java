@@ -3,6 +3,7 @@ package apap.tutorial.pergipergi.service;
 import apap.tutorial.pergipergi.model.TravelAgensiModel;
 import apap.tutorial.pergipergi.repository.TravelAgensiDb;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,8 +24,13 @@ public class TravelAgensiServiceImpl implements TravelAgensiService {
     }
 
     @Override
+    public void deleteAgensi(TravelAgensiModel travelAgensi) {
+        travelAgensiDb.delete(travelAgensi);
+    }
+
+    @Override
     public List<TravelAgensiModel> getListAgensi() {
-        return travelAgensiDb.findAll();
+        return travelAgensiDb.findAll(Sort.by(Sort.Direction.ASC, "namaAgensi"));
     }
 
     @Override

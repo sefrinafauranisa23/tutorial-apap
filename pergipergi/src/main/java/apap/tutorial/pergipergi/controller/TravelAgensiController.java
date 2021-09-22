@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,36 +84,20 @@ public class TravelAgensiController {
     ) {
         List<TravelAgensiModel> listAgensi = travelAgensiService.getListAgensi();
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
-//        if (agensi.getListTourGuide().isEmpty()) {
-//            if (agensi.getWaktuBuka()  && agensi.getWaktuTutup()) {
-//                listAgensi.remove(agensi);
-//            }
-//        }
-        return "viewall-agensi";
+        if (agensi.getListTourGuide().isEmpty()) {
+            if (!(agensi.getWaktuBuka().compareTo(LocalTime.now()) > 0 && agensi.getWaktuTutup().compareTo(LocalTime.now()) < 0)) {
+                listAgensi.remove(agensi);
+                travelAgensiService.deleteAgensi(agensi);
+                model.addAttribute("listAgensi", listAgensi);
+                return "viewall-agensi";
+            }
+        }
+        return "halaman-error";
     }
 
-    @GetMapping("/agensi/tour-guide/delete/{noTourGuide}/{noAgensi}")
-    public String deleteTourGuide (
-            @PathVariable Long noTourGuide,
-            @PathVariable Long noAgensi,
-            Model model
-    ) {
-        TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
-        TourGuideModel tourGuide = agensi.getListTourGuide().get(noTourGuide);
-        agensi.getListTourGuide().remove(tourGuide);
-        return "viewall-agensi";
-    }
 
-    @GetMapping("/agensi/tour-guide/update/{noTourGuide}/{noAgensi}")
-    public String deleteTourGuide (
-            @PathVariable Long noTourGuide,
-            @PathVariable Long noAgensi,
-            Model model
-    ) {
-        TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
-        TourGuideModel tourGuide = agensi.getListTourGuide().get(noTourGuide);
-        agensi.getListTourGuide().remove(tourGuide);
-        return "viewall-agensi";
-    }
+
+
+
 }
 

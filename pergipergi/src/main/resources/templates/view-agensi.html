@@ -24,8 +24,8 @@
                         <p th:text="'Nama : ' + ${guide.namaTourGuide}"></p>
                         <p th:if="${guide.jenisKelamin == 0}">Jenis Kelamin : Perempuan</p>
                         <p th:if="${guide.jenisKelamin == 1}">Jenis Kelamin : Laki-laki</p>
-                        <a class="btn btn-primary" th:href="@{/agensi/tour-guide/update/} + ${guide.noTourGuide}/ + ${agensi.noAgensi}">Update</a>
-                        <a class="btn btn-primary" th:href="@{/agensi/tour-guide/delete/} + ${guide.noTourGuide}/ + ${agensi.noAgensi}" >Delete</a>
+                        <a class="btn btn-primary" th:href="@{/tour-guide/update/} + ${agensi.noAgensi} + @{/guide/} + ${guide.noTourGuide}">Update</a>
+                        <a class="btn btn-primary" th:href="@{/tour-guide/delete/} + ${agensi.noAgensi} +  @{/guide/} + ${guide.noTourGuide}" >Delete</a>
                         <hr>
                     </div>
                 </div>

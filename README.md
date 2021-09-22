@@ -1,3 +1,81 @@
+## Tutorial 3
+### What I have learned today
+-	Saya belajar Create, Read, Update, dan Delete (CRUD) pada basis data dengan menggunakan konsep MVC dalam project Spring Boot.
+-	Saya belajar model yang terhubung dengan basis data.
+-	Saya belajar JPARepository untuk melakukan query pada basis data.
+
+### Pertanyaan
+1. Tolong jelaskan secara singkat apa kegunaan dari anotasi-anotasi yang ada pada model (@AllArgsConstructor, @NoArgsConstructor, @Setter, @Getter, @Entity, @Table)
+Kegunaan :
+
+@AllArgsConstructor : lombok menghasilkan konstruktor dengan 1 parameter untuk setiap field di class kita.
+
+@NoArgsConstructor : lombok menghasilkan konstruktor tanpa parameter.
+
+@Setter : lombok membuat metode default untuk set (setter) nilai atribut/field secara otomatis.
+
+@Getter : lombok membuat metode default untuk get (getter) nilai atribut/field secara otomatis.
+
+@Entity : mendefinisikan sebuah entitas agar JPA mengetahui terdapat entitas tersebut.
+
+@Table : menspesifikasikan nama tabel dalam database karena biasanya nama tabel dalam database dan nama entitas tidak sama.
+
+Sumber :
+https://projectlombok.org/features/constructor
+https://projectlombok.org/features/GetterSetter
+https://www.baeldung.com/jpa-entities
+
+2. Pada class TravelAgensiDb, terdapat method findByNoAgensi, apakah kegunaan dari method tersebut?
+
+Kegunaan method findByNoAgensi yang terdapat pada class TravelAgensiDb adalah untuk mencari suatu travel agensi di database tabel Travel Agensi berdasarkan no agensi yang di passing. 
+
+3. Jelaskan perbedaan kegunaan dari anotasi @JoinTable dan @JoinColumn
+
+Kegunaan :
+
+@JoinTable : untuk mendefinisikan tabel join/link (menentukan pemetaan asosiasi entitas)
+
+@JoinColumn : untuk menentukan kolom join/link dengan tabel utama, yaitu untuk memetakan kolom gabungan database dalam entitas (kolom yang tergabung ke asosiasi entitas atau koleksi elemen).
+
+Sumber :
+https://www.baeldung.com/hibernate-many-to-many
+https://javabydeveloper.com/difference-between-joincolumn-and-mappedby/
+https://docs.oracle.com/javaee/7/api/javax/persistence/JoinTable.html
+
+4. Pada class TourGuideModel, digunakan anotasi @JoinColumn pada atribut agensi, apa kegunaan dari name, referencedColumnName, dan nullable dalam anotasi tersebut? dan apa perbedaan nullable dan penggunaan anotasi @NotNull
+
+Kegunaan dari name, referencedColumnName, dan nullable dalam anotasi tersebut menunjukkan kolom dari AgensiModel yang di-join atau diasosiasikan dengan tabel utama (TourGuideModel).
+
+Perbedaan :
+
+Nullable : nullable didefinisikan sebagai bagian dari spesifikasi Java Persistence API. Hal ini digunakan terutama dalam pembuatan metadata skema DDL. Hal ini berarti bahwa jika kita membiarkan Hibernate menghasilkan skema database secara otomatis, itu menerapkan not null constraint ke kolom database tertentu.
+@NotNull : Anotasi @NotNull didefinisikan dalam spesifikasi Bean Validation. Hal ini berarti penggunaannya tidak terbatas hanya pada entitas. Hibernate tidak memicu SQL insert statement. Akibatnya, data yang tidak valid tidak disimpan ke database (terdapat validasi terlebih dahulu). 
+
+Sumber :
+https://www.baeldung.com/hibernate-notnull-vs-nullable
+
+5. Jelaskan kegunaan FetchType.LAZY, CascadeType.ALL, dan FetchType.EAGER
+
+Kegunaan :
+
+FetchType.LAZY : mengambil data dari database dengan cara memuatnya sesuai permintaan (ketika ingin mengakses saja), misalnya saat terdapat suatu method get. 
+
+CascadeType.ALL : menyebarkan (cascade) semua operasi EntityManager (PERSIST, REMOVE, REFRESH, MERGE, DETACH) ke entitas terkait. 
+
+FetchType.EAGER : mengambil data dari database dengan cara memuatnya bersamaan dengan field lainnya atau ketika parent mereka diambil dari database.
+
+Sumber : 
+https://newbedev.com/difference-between-fetchtype-lazy-and-eager-in-java-persistence-api
+https://newbedev.com/what-is-the-meaning-of-the-cascadetype-all-for-a-manytoone-jpa-association
+
+### What I did not understand
+- [ ] Masih belum begitu memahami penggunaan JPA Repository
+(Anda dapat membuat tampilan code dalam README.md menjadi lebih baik. Cari tahu
+lebih dalam tentang penulisan README.md di GitHub pada link
+[berikut](https://help.github.com/en/articles/basic-writing-and-formatting-syntax))
+
+---
+
 ## Tutorial 2
 
 ### What I have learned today

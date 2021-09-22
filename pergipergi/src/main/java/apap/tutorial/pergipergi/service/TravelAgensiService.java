@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface TravelAgensiService {
     void addAgensi(TravelAgensiModel travelAgensi);
+    void deleteAgensi(TravelAgensiModel travelAgensi);
     List<TravelAgensiModel> getListAgensi();
     TravelAgensiModel getAgensiByNoAgensi(Long noAgensi);
     TravelAgensiModel updateAgensi(TravelAgensiModel travelAgensi);

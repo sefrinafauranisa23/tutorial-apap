@@ -18,4 +18,15 @@ public class TourGuideServiceImpl implements TourGuideService {
     public void addTourGuide(TourGuideModel tourGuide) {
         tourGuideDb.save(tourGuide);
     }
+
+    @Override
+    public void deleteTourGuide(TourGuideModel tourGuide) {
+        tourGuideDb.delete(tourGuide);
+    }
+
+    @Override
+    public TourGuideModel updateTourGuide(TourGuideModel tourGuide) {
+        tourGuideDb.save(tourGuide);
+        return tourGuide;
+    }
 }
