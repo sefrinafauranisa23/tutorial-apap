@@ -68,6 +68,7 @@ public class TourGuideController {
                     }
                 }
             }
+        model.addAttribute("proses", "Delete Tour Guide");
         return "halaman-error";
     }
 
@@ -88,6 +89,7 @@ public class TourGuideController {
                 }
             }
         }
+        model.addAttribute("proses", "Update Tour Guide");
         return "halaman-error";
     }
 

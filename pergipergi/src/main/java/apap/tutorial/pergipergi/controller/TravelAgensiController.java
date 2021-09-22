@@ -50,7 +50,9 @@ public class TravelAgensiController {
     ) {
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
         List<TourGuideModel> listTourGuide = agensi.getListTourGuide();
-
+        for (TourGuideModel a : listTourGuide) {
+            System.out.println(a.getJenisKelamin());
+        }
         model.addAttribute("agensi", agensi);
         model.addAttribute("listTourGuide", listTourGuide);
 
@@ -92,6 +94,7 @@ public class TravelAgensiController {
                 return "viewall-agensi";
             }
         }
+        model.addAttribute("proses", "Delete Agensi");
         return "halaman-error";
     }
 
