@@ -8,7 +8,7 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2 th:text="'Tour guide nomor ' + ${noTourGuide} + ' berhasil diubah.'"></h2>
+                <h2 th:text="'Tour guide nomor ' + ${noTourGuide} + ' berhasil ' + ${proses} + '.'"></h2>
                 <br>
                 <a class="btn btn-primary" th:href="@{/agensi/view(noAgensi=${noAgensi})}">Kembali</a>
             </div>

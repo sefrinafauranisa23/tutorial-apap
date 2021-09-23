@@ -50,9 +50,6 @@ public class TravelAgensiController {
     ) {
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
         List<TourGuideModel> listTourGuide = agensi.getListTourGuide();
-        for (TourGuideModel a : listTourGuide) {
-            System.out.println(a.getJenisKelamin());
-        }
         model.addAttribute("agensi", agensi);
         model.addAttribute("listTourGuide", listTourGuide);
 
@@ -87,14 +84,16 @@ public class TravelAgensiController {
         List<TravelAgensiModel> listAgensi = travelAgensiService.getListAgensi();
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
         if (agensi.getListTourGuide().isEmpty()) {
-            if (!(agensi.getWaktuBuka().compareTo(LocalTime.now()) > 0 && agensi.getWaktuTutup().compareTo(LocalTime.now()) < 0)) {
+            if (!(agensi.getWaktuBuka().compareTo(LocalTime.now()) < 0 && agensi.getWaktuTutup().compareTo(LocalTime.now()) >= 0)) {
                 listAgensi.remove(agensi);
                 travelAgensiService.deleteAgensi(agensi);
-                model.addAttribute("listAgensi", listAgensi);
-                return "viewall-agensi";
+                model.addAttribute("proses", "dihapus");
+                model.addAttribute("noAgensi", noAgensi);
+                return "proses-berhasil";
             }
         }
         model.addAttribute("proses", "Delete Agensi");
+        model.addAttribute("noAgensi", noAgensi);
         return "halaman-error";
     }
 
