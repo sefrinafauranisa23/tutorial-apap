@@ -49,11 +49,15 @@ public class TravelAgensiController {
             Model model
     ) {
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
-        List<TourGuideModel> listTourGuide = agensi.getListTourGuide();
-        model.addAttribute("agensi", agensi);
-        model.addAttribute("listTourGuide", listTourGuide);
-
-        return "view-agensi";
+        if (agensi != null) {
+            List<TourGuideModel> listTourGuide = agensi.getListTourGuide();
+            model.addAttribute("agensi", agensi);
+            model.addAttribute("listTourGuide", listTourGuide);
+            return "view-agensi";
+        } else {
+            model.addAttribute("noAgensi", noAgensi);
+            return "agensi-gagal";
+        }
     }
 
     @GetMapping("/agensi/update/{noAgensi}")
@@ -62,8 +66,13 @@ public class TravelAgensiController {
             Model model
     ) {
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
-        model.addAttribute("agensi", agensi);
-        return "form-update-agensi";
+        if (agensi != null) {
+            model.addAttribute("agensi", agensi);
+            return "form-update-agensi";
+        } else {
+            model.addAttribute("noAgensi", noAgensi);
+            return "agensi-gagal";
+        }
     }
 
     @PostMapping("/agensi/update")
@@ -83,23 +92,23 @@ public class TravelAgensiController {
     ) {
         List<TravelAgensiModel> listAgensi = travelAgensiService.getListAgensi();
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
-        if (agensi.getListTourGuide().isEmpty()) {
-            if (!(agensi.getWaktuBuka().compareTo(LocalTime.now()) < 0 && agensi.getWaktuTutup().compareTo(LocalTime.now()) >= 0)) {
-                listAgensi.remove(agensi);
-                travelAgensiService.deleteAgensi(agensi);
-                model.addAttribute("proses", "dihapus");
-                model.addAttribute("noAgensi", noAgensi);
-                return "proses-berhasil";
+        if (agensi != null) {
+            if (agensi.getListTourGuide().isEmpty()) {
+                if (!(agensi.getWaktuBuka().compareTo(LocalTime.now()) < 0 && agensi.getWaktuTutup().compareTo(LocalTime.now()) >= 0)) {
+                    listAgensi.remove(agensi);
+                    travelAgensiService.deleteAgensi(agensi);
+                    model.addAttribute("proses", "dihapus");
+                    model.addAttribute("noAgensi", noAgensi);
+                    return "proses-berhasil";
+                }
             }
+            model.addAttribute("proses", "Delete Agensi");
+            model.addAttribute("noAgensi", noAgensi);
+            return "halaman-error";
+        } else {
+            model.addAttribute("noAgensi", noAgensi);
+            return "agensi-gagal";
         }
-        model.addAttribute("proses", "Delete Agensi");
-        model.addAttribute("noAgensi", noAgensi);
-        return "halaman-error";
     }
-
-
-
-
-
 }
 

@@ -32,9 +32,14 @@ public class TourGuideController {
             Model model) {
         TourGuideModel guide = new TourGuideModel();
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
-        guide.setAgensi(agensi);
-        model.addAttribute("guide", guide);
-        return "form-add-tour-guide";
+        if (agensi != null) {
+            guide.setAgensi(agensi);
+            model.addAttribute("guide", guide);
+            return "form-add-tour-guide";
+        } else {
+            model.addAttribute("noAgensi", noAgensi);
+            return "agensi-gagal";
+        }
     }
 
     @PostMapping("/tour-guide/add")
@@ -54,9 +59,10 @@ public class TourGuideController {
             Model model
     ) {
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
-        List<TourGuideModel> tourGuide = agensi.getListTourGuide();
-        List<TravelAgensiModel> listAgensi = travelAgensiService.getListAgensi();
-        if (!(agensi.getWaktuBuka().compareTo(LocalTime.now()) < 0 && agensi.getWaktuTutup().compareTo(LocalTime.now()) >= 0)) {
+        if (agensi != null) {
+            List<TourGuideModel> tourGuide = agensi.getListTourGuide();
+            List<TravelAgensiModel> listAgensi = travelAgensiService.getListAgensi();
+            if (!(agensi.getWaktuBuka().compareTo(LocalTime.now()) < 0 && agensi.getWaktuTutup().compareTo(LocalTime.now()) >= 0)) {
                 for (TourGuideModel tg : tourGuide) {
                     if (tg.getNoTourGuide().equals(noTourGuide)) {
                         agensi.getListTourGuide().remove(tg);
@@ -70,9 +76,13 @@ public class TourGuideController {
                     }
                 }
             }
-        model.addAttribute("proses", "Delete Tour Guide");
-        model.addAttribute("noAgensi", noAgensi);
-        return "halaman-error";
+            model.addAttribute("proses", "Delete Tour Guide");
+            model.addAttribute("noAgensi", noAgensi);
+            return "halaman-error";
+        } else {
+            model.addAttribute("noAgensi", noAgensi);
+            return "agensi-gagal";
+        }
     }
 
     @GetMapping("/tour-guide/update/{noAgensi}/guide/{noTourGuide}")
@@ -82,19 +92,24 @@ public class TourGuideController {
             Model model
     ) {
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
-        List<TourGuideModel> tourGuide = agensi.getListTourGuide();
-        if (!(agensi.getWaktuBuka().compareTo(LocalTime.now()) < 0 && agensi.getWaktuTutup().compareTo(LocalTime.now()) >= 0)) {
-            for (TourGuideModel tg : tourGuide) {
-                if (tg.getNoTourGuide().equals(noTourGuide)) {
-                    model.addAttribute("tourGuide", tg);
-                    model.addAttribute("agensi", agensi);
-                    return "form-update-tour-guide";
+        if (agensi != null) {
+            List<TourGuideModel> tourGuide = agensi.getListTourGuide();
+            if (!(agensi.getWaktuBuka().compareTo(LocalTime.now()) < 0 && agensi.getWaktuTutup().compareTo(LocalTime.now()) >= 0)) {
+                for (TourGuideModel tg : tourGuide) {
+                    if (tg.getNoTourGuide().equals(noTourGuide)) {
+                        model.addAttribute("tourGuide", tg);
+                        model.addAttribute("agensi", agensi);
+                        return "form-update-tour-guide";
+                    }
                 }
             }
+            model.addAttribute("proses", "Update Tour Guide");
+            model.addAttribute("noAgensi", noAgensi);
+            return "halaman-error";
+        } else {
+            model.addAttribute("noAgensi", noAgensi);
+            return "agensi-gagal";
         }
-        model.addAttribute("proses", "Update Tour Guide");
-        model.addAttribute("noAgensi", noAgensi);
-        return "halaman-error";
     }
 
     @PostMapping("/tour-guide/update")
