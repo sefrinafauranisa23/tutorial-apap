@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Delete Agensi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"></head>
 </head>
 <body>
-<h2 th:text="'Travel Agensi dengan id Agensi ' + ${idAgensi} + ' berhasil di'+ ${berhasil} +'.'"></h2>
-<a href="/agensi/viewAll">Kembali</a>
-
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2 th:text="'Travel Agensi dengan no Agensi ' + ${noAgensi} + ' berhasil ' + ${proses} +'.'"></h2>
+                <br>
+                <a class="btn btn-primary" href="/agensi/viewall">Kembali</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
