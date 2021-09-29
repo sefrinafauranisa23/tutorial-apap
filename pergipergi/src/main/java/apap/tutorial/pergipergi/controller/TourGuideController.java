@@ -47,6 +47,16 @@ public class TourGuideController {
             @ModelAttribute TourGuideModel tourGuide,
             Model model
     ){
+        List<TourGuideModel> list = tourGuide.getAgensi().getListTourGuide();
+        for (TourGuideModel i : list) {
+            if (i.getNamaTourGuide().equals(tourGuide.getNamaTourGuide())){
+                model.addAttribute("proses", "Add Tour Guide");
+                model.addAttribute("noAgensi", tourGuide.getAgensi().getNoAgensi());
+                return "halaman-error";
+            } else {
+                continue;
+            }
+        }
         tourGuideService.addTourGuide(tourGuide);
         model.addAttribute("noTourGuide", tourGuide.getNoTourGuide());
         return "add-tour-guide";
