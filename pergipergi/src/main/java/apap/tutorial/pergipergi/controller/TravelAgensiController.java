@@ -1,7 +1,9 @@
 package apap.tutorial.pergipergi.controller;
 
+import apap.tutorial.pergipergi.model.DestinasiModel;
 import apap.tutorial.pergipergi.model.TravelAgensiModel;
 import apap.tutorial.pergipergi.model.TourGuideModel;
+import apap.tutorial.pergipergi.service.DestinasiService;
 import apap.tutorial.pergipergi.service.TravelAgensiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,19 +21,24 @@ public class TravelAgensiController {
     @Qualifier("travelAgensiServiceImpl")
     @Autowired
     private TravelAgensiService travelAgensiService;
+    private DestinasiService destinasiService;
 
     @GetMapping("/agensi/add")
     public String addAgensiFormPage(Model model) {
+        List<DestinasiModel> listDestinasi = destinasiService.getListDestinasi();
         model.addAttribute("agensi", new TravelAgensiModel());
+        model.addAttribute("listDestinasi", listDestinasi);
         return "form-add-agensi";
     }
 
     @PostMapping("/agensi/add")
     public String addAgensiSubmitPage(
             @ModelAttribute TravelAgensiModel agensi,
+            @ModelAttribute DestinasiModel destinasi,
             Model model
     ) {
         travelAgensiService.addAgensi(agensi);
+        agensi.getListDestinasi().add(destinasi);
         model.addAttribute("noAgensi", agensi.getNoAgensi());
         return "add-agensi";
     }
@@ -51,8 +58,10 @@ public class TravelAgensiController {
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
         if (agensi != null) {
             List<TourGuideModel> listTourGuide = agensi.getListTourGuide();
+            List<DestinasiModel> listDestinasi = agensi.getListDestinasi();
             model.addAttribute("agensi", agensi);
             model.addAttribute("listTourGuide", listTourGuide);
+            model.addAttribute("listDestinasi", listDestinasi);
             return "view-agensi";
         } else {
             model.addAttribute("noAgensi", noAgensi);

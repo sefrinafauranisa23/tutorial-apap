@@ -133,4 +133,16 @@ public class TourGuideController {
         model.addAttribute("proses", "diubah");
         return "proses-tour-guide";
     }
+
+    @PostMapping("/tour-guide/delete")
+    public String deleteTourGuideSubmit(
+            @ModelAttribute TravelAgensiModel agensi,
+            Model model
+    ){
+       model.addAttribute("noAgensi", agensi.getNoAgensi());
+       for (TourGuideModel tourGuide : agensi.getListTourGuide()) {
+           tourGuideService.deleteTourGuide(tourGuide);
+       }
+       return "delete-tour-guide";
+    }
 }
