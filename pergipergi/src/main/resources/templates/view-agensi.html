@@ -63,8 +63,10 @@
                         </form>
                     </div>
                     <div th:unless="*{listTourGuide.size() != 0}">
-                        <h2 th:text="'Tidak ada Tour Guide'"></h2>
+                        <h5 th:text="'Tidak ada Tour Guide'"></h5>
                     </div>
+                    <br>
+                    <h4>Daftar Destinasi : </h4>
                     <hr>
                     <div th:if ="*{listDestinasi.size() != 0}">
                         <table class="table">
@@ -81,8 +83,8 @@
                                 <td th:text="${iterationStatus.count}"></td>
                                 <td th:text="${destinasi.noDestinasi}"></td>
                                 <td th:text="${destinasi.negaraDestinasi}"></td>
-                                <td th:if="${destinasi.isBebasVisa} == 0">YA</td>
-                                <td th:if="${destinasi.isBebasVisa} == 1">TIDAK</td>
+                                <td th:if="${destinasi.isBebasVisa == false}" th:text="'TIDAK'"></td>
+                                <td th:if="${destinasi.isBebasVisa == true}" th:text="'YA'"></td>
                             </tr>
                             </tbody>
                         </table>

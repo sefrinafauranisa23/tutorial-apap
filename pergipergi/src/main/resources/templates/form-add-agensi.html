@@ -16,38 +16,44 @@
         <br>
         <form th:action="@{/agensi/add}" th:object="${agensi}" method="POST">
           Nama Agensi : <br>
-          <input class="form-control" type="text" name="namaAgensi"/>
+          <input class="form-control" type="text" name="namaAgensi" th:field="*{namaAgensi}"/>
           <br><br>
 
           Alamat Agensi: <br>
-          <input class="form-control" type="text" name="alamatAgensi"/>
+          <input class="form-control" type="text" name="alamatAgensi" th:field="*{alamatAgensi}"/>
           <br><br>
 
           Nomor Telepon : <br>
-          <input class="form-control" type="text" name="noTeleponAgensi"/>
+          <input class="form-control" type="text" name="noTeleponAgensi" th:field="*{noTeleponAgensi}"/>
           <br><br>
 
           Waktu Buka : <br>
-          <input required class="form-control" type="time" name="waktuBuka" />
+          <input required class="form-control" type="time" name="waktuBuka" th:field="*{waktuBuka}"/>
           <br><br>
 
           Waktu Tutup : <br>
-          <input required class="form-control" type="time" name="waktuTutup" />
+          <input required class="form-control" type="time" name="waktuTutup" th:field="*{waktuTutup}"/>
           <br><br>
 
-          Negara Destinasi :
-          <table>
+          <table class="table">
             <thead>
-            <button class="btn btn-primary" type="submit" name="addRow">Tambah Destinasi</button>
+            <tr>
+              <td>Negara Destinasi :</td>
+              <td><button class="btn btn-primary" type="submit" name="addRow">Tambah Destinasi</button></td>
+            </tr>
+            </thead>
+            <tbody>
             <tr th:each="destinasi, iterationStatus : *{listDestinasi}">
               <td>
                 <select name="noDestinasi" th:field="*{listDestinasi[__${iterationStatus.index}__].noDestinasi}" class="form-control">
                   <option th:each="i : ${listDestinasiExisting}" th:value="${i.noDestinasi}" th:text="${i.negaraDestinasi}"></option>
                 </select>
-                <button class="btn btn-primary" type="submit" name="deleteRow">Menghapus Destinasi</button>
+              </td>
+              <td>
+                <button class="btn btn-danger" type="submit" name="deleteRow">Hapus</button>
               </td>
             </tr>
-            </thead>
+            </tbody>
           </table>
 
 
