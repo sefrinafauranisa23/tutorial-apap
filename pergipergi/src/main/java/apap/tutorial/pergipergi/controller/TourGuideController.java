@@ -139,10 +139,15 @@ public class TourGuideController {
             @ModelAttribute TravelAgensiModel agensi,
             Model model
     ){
-       model.addAttribute("noAgensi", agensi.getNoAgensi());
-       for (TourGuideModel tourGuide : agensi.getListTourGuide()) {
-           tourGuideService.deleteTourGuide(tourGuide);
-       }
-       return "delete-tour-guide";
+        if (travelAgensiService.isClosed(agensi.getWaktuBuka(), agensi.getWaktuTutup())) {
+            for (TourGuideModel tourGuide : agensi.getListTourGuide()) {
+                tourGuideService.deleteTourGuide(tourGuide);
+            }
+            model.addAttribute("noAgensi", agensi.getNoAgensi());
+            return "delete-tour-guide";
+        }
+        model.addAttribute("proses", "Delete Tour Guide");
+        return "halaman-error";
     }
 }
+

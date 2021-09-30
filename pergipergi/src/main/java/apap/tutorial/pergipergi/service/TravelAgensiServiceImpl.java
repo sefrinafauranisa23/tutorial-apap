@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +45,14 @@ public class TravelAgensiServiceImpl implements TravelAgensiService {
     public TravelAgensiModel updateAgensi(TravelAgensiModel travelAgensi) {
         travelAgensiDb.save(travelAgensi);
         return travelAgensi;
+    }
+
+    @Override
+    public boolean isClosed(LocalTime waktuBuka, LocalTime waktuTutup) {
+        LocalTime now = LocalTime.now();
+        if(now.isBefore(waktuBuka) || now.isAfter(waktuTutup)) {
+            return true;
+        }
+        return false;
     }
 }

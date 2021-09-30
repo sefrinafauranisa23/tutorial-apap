@@ -36,11 +36,22 @@
           <br><br>
 
           Negara Destinasi :
-          <select th:object="${destinasi}">
-            <option th:each="i : ${listDestinasi}" th:value="${i.negaraDestinasi}" th:text="${i.negaraDestinasi}"></option>
-          </select>
+          <table>
+            <thead>
+            <button class="btn btn-primary" type="submit" name="addRow">Tambah Destinasi</button>
+            <tr th:each="destinasi, iterationStatus : *{listDestinasi}">
+              <td>
+                <select name="noDestinasi" th:field="*{listDestinasi[__${iterationStatus.index}__].noDestinasi}" class="form-control">
+                  <option th:each="i : ${listDestinasiExisting}" th:value="${i.noDestinasi}" th:text="${i.negaraDestinasi}"></option>
+                </select>
+                <button class="btn btn-primary" type="submit" name="deleteRow">Menghapus Destinasi</button>
+              </td>
+            </tr>
+            </thead>
+          </table>
 
-          <button class="btn btn-primary" type="submit">Submit</button>
+
+          <button class="btn btn-primary" type="submit" name="save">Submit</button>
           <a class="btn btn-primary" href="/">Home</a>
         </form>
       </div>
