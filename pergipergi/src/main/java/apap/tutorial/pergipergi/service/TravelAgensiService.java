@@ -13,32 +13,3 @@ public interface TravelAgensiService {
     TravelAgensiModel updateAgensi(TravelAgensiModel travelAgensi);
     boolean isClosed(LocalTime waktuBuka, LocalTime waktuTutup);
 }
-
-//@Service
-//class TravelAgensiServiceImpl implements TravelAgensiService{
-//    private List<TravelAgensiModel> listAgensi;
-//
-//    public TravelAgensiServiceImpl() {
-//        listAgensi = new ArrayList<>();
-//    }
-//
-//    @Override
-//    public void addAgensi(TravelAgensiModel travelAgensiModel){
-//        listAgensi.add(travelAgensiModel);
-//    }
-//
-//    @Override
-//    public List<TravelAgensiModel> getListAgensi() {
-//        return listAgensi;
-//    }
-//
-//    @Override
-//    public TravelAgensiModel getAgensiByidAgensi(String idAgensi) {
-//        for (TravelAgensiModel t : listAgensi) {
-////            if (t.getIdAgensi().equals(idAgensi)) {
-////                return t;
-////            }
-//        }
-//        return null;
-//    }
-//}

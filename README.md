@@ -46,8 +46,6 @@ https://o7planning.org/12385/thymeleaf-th-object-and-asterisk-syntax
 lebih dalam tentang penulisan README.md di GitHub pada link
 [berikut](https://help.github.com/en/articles/basic-writing-and-formatting-syntax))
 
----
-
 ## Tutorial 3
 
 ### What I have learned today
