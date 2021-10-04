@@ -35,6 +35,7 @@ public class TourGuideController {
         if (agensi != null) {
             guide.setAgensi(agensi);
             model.addAttribute("guide", guide);
+            model.addAttribute("page", "add tour guide");
             return "form-add-tour-guide";
         } else {
             model.addAttribute("noAgensi", noAgensi);

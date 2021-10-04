@@ -33,6 +33,7 @@ public class TravelAgensiController<params> {
         List<DestinasiModel> listDestinasi = destinasiService.getListDestinasi();
         model.addAttribute("agensi", new TravelAgensiModel());
         model.addAttribute("listDestinasi", listDestinasi);
+        model.addAttribute("page", "add agensi");
         return "form-add-agensi";
     }
 
@@ -75,6 +76,7 @@ public class TravelAgensiController<params> {
     public String listAgensi(Model model) {
         List<TravelAgensiModel> listAgensi = travelAgensiService.getListAgensi();
         model.addAttribute("listAgensi", listAgensi);
+        model.addAttribute("page", "view all agensi");
         return "viewall-agensi";
     }
 
@@ -90,6 +92,7 @@ public class TravelAgensiController<params> {
             model.addAttribute("agensi", agensi);
             model.addAttribute("listTourGuide", listTourGuide);
             model.addAttribute("listDestinasi", listDestinasi);
+            model.addAttribute("page", "view agensi");
             return "view-agensi";
         } else {
             model.addAttribute("noAgensi", noAgensi);
@@ -105,6 +108,7 @@ public class TravelAgensiController<params> {
         TravelAgensiModel agensi = travelAgensiService.getAgensiByNoAgensi(noAgensi);
         if (agensi != null) {
             model.addAttribute("agensi", agensi);
+            model.addAttribute("page", "update agensi");
             return "form-update-agensi";
         } else {
             model.addAttribute("noAgensi", noAgensi);
