@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -47,9 +49,24 @@ public class TravelAgensiController<params> {
         return "add-agensi";
     }
 
+//    @PostMapping(value = "/agensi/add", params=("addRow"))
+//    public String addRow(
+//            @ModelAttribute TravelAgensiModel agensi,
+//            Model model
+//    ) {
+//        if (agensi.getListDestinasi() == null || agensi.getListDestinasi().size() == 0) {
+//            agensi.setListDestinasi(new ArrayList<>());
+//        }
+//        agensi.getListDestinasi().add(new DestinasiModel());
+//        model.addAttribute("agensi", agensi);
+//        model.addAttribute("listDestinasiExisting", destinasiService.getListDestinasi());
+//        return "form-add-agensi";
+//    }
+
     @PostMapping(value = "/agensi/add", params=("addRow"))
     public String addRow(
-            @ModelAttribute TravelAgensiModel agensi,
+            final TravelAgensiModel agensi,
+            final BindingResult bindingResult,
             Model model
     ) {
         if (agensi.getListDestinasi() == null || agensi.getListDestinasi().size() == 0) {
@@ -61,12 +78,26 @@ public class TravelAgensiController<params> {
         return "form-add-agensi";
     }
 
+//    @PostMapping(value="/agensi/add", params=("deleteRow"))
+//    public String deleteRow(
+//            @ModelAttribute TravelAgensiModel agensi,
+//            Model model
+//    ) {
+//        agensi.getListDestinasi().remove(0);
+//        model.addAttribute("agensi", agensi);
+//        model.addAttribute("listDestinasiExisting", destinasiService.getListDestinasi());
+//        return "form-add-agensi";
+//    }
+
     @PostMapping(value="/agensi/add", params=("deleteRow"))
     public String deleteRow(
-            @ModelAttribute TravelAgensiModel agensi,
+            final TravelAgensiModel agensi,
+            final BindingResult bindingResult,
+            final HttpServletRequest req,
             Model model
     ) {
-        agensi.getListDestinasi().remove(0);
+        final Integer rowId = Integer.valueOf(req.getParameter("deleteRow"));
+        agensi.getListDestinasi().remove(rowId.intValue());
         model.addAttribute("agensi", agensi);
         model.addAttribute("listDestinasiExisting", destinasiService.getListDestinasi());
         return "form-add-agensi";

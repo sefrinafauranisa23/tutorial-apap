@@ -42,9 +42,12 @@
         </form>
     </div>
 </nav>
-<footer th:fragment="footer">
-    <div th:text = "${#httpServletRequest.getRequestURI() == '/' ? 'home' : ''"></div>
-    <div th:text = "${#httpServletRequest.getRequestURI().startsWith('/agensi')  ? 'agensi' : ''"></div>
+<!--<div th:fragment="footer(nama)">-->
+<!--    <span th:text="${nama}"></span>-->
+<!--</div>-->
+<footer th:fragment="footer" class="text-center text-lg-start bg-light text-muted">
+    <div th:text = "${#httpServletRequest.getRequestURI() == '/' ? 'home' : ''}"></div>
+    <div th:text = "${#httpServletRequest.getRequestURI().startsWith('/agensi')  ? 'agensi' : ''}"></div>
     <div th:text = "${#httpServletRequest.getRequestURI().startsWith('/destinasi') ? 'destinasi' : ''}"></div>
 </footer>
 <!--    <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
