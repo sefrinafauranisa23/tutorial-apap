@@ -1,10 +1,60 @@
+## Tutorial 4
+
+### What I have learned today
+
+- Saya belajar konsep view pada Spring Boot
+- Saya belajar apa itu Thymeleaf dan kegunaannya
+
+### Pertanyaan
+
+1. Jelaskan perbedaan th:include dan th:replace!
+
+th:include => memasukkan hanya konten dari fragmen yang ditentukan kepada atau sebagai bagian dari tagnya. Atribut th:include ini menyisipkan fragmen yang ditentukan sebagai badan tag inangnya tetapi tanpa menyisipkan fragment tag nya.
+
+th:replace => mengganti (replace) tag inangnya nya dengan fragmen yang ditentukan atau didefinisikan pada tag inang tersebut. Atribut th:replace ini akan menggantikan tag host (inang) dengan fragmen tersebut. Hal tersebut berarti akan menghapus tag inang dan menggantikan tag inang dengan konten fragmen beserta fragment tag nya.
+
+Sumber :
+
+https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html
+
+2. Jelaskan apa fungsi dari th:object!
+
+Fungsi dari atribut th:object yaitu untuk menentukan objek yang terikat oleh data formulir yang dikirimkan. Masing-masing field dipetakan menggunakan atribut th:field=”*{nama}”, dimana ‘nama’ adalah properti objek yang sesuai dengan objek tersebut. Atribut th:object mendefinisikan objek mana yang dirujuk oleh _field_.
+
+Sumber :
+
+https://www.baeldung.com/thymeleaf-in-spring-mvc
+
+https://stackabuse.com/getting-started-with-thymeleaf-in-java-and-spring/
+
+
+3. Jelaskan perbedaan dari * dan $ pada saat penggunaan th:object! Kapan harus dipakai?
+
+syntax $ => digunakan untuk menspesifikkan objek pada saat menggunakan atribut th:object. Syntax ${} pada atribut th:object dipakai ketika ingin memilih objek yang ingin digunakan.
+
+syntax * => digunakan untuk menspesifikkan properti objek dari objek yang didefinisikan pada atribut th:object. Ketika suatu object telah didefinisikan pada atribut th:object dengan syntax ${}, maka kita dapat menggunakan syntax *{} untuk menspesifikkan properti dari objek tersebut. 
+
+Sumber:
+
+https://o7planning.org/12385/thymeleaf-th-object-and-asterisk-syntax
+
+### What I did not understand
+
+- [ ] Masih belum memahami syntax dari penggunaan Thymeleaf
+
+(Anda dapat membuat tampilan code dalam README.md menjadi lebih baik. Cari tahu
+lebih dalam tentang penulisan README.md di GitHub pada link
+[berikut](https://help.github.com/en/articles/basic-writing-and-formatting-syntax))
+
 ## Tutorial 3
+
 ### What I have learned today
 -	Saya belajar Create, Read, Update, dan Delete (CRUD) pada basis data dengan menggunakan konsep MVC dalam project Spring Boot.
 -	Saya belajar model yang terhubung dengan basis data.
 -	Saya belajar JPARepository untuk melakukan query pada basis data.
 
 ### Pertanyaan
+
 1. Tolong jelaskan secara singkat apa kegunaan dari anotasi-anotasi yang ada pada model (@AllArgsConstructor, @NoArgsConstructor, @Setter, @Getter, @Entity, @Table)
    Kegunaan :
 

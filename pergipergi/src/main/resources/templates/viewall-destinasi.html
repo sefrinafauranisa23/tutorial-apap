@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <title>PergiPergi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+  <nav th:replace="fragments/fragment :: navbar"></nav>
+  <div class="container">
+    <h2>Daftar Seluruh Destinasi</h2>
+    <br>
+    <div th:if ="*{listDestinasi.size() != 0}">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>No</th>
+          <th>Nomor Destinasi</th>
+          <th>Negara Destinasi</th>
+          <th>Bebas Visa</th>
+        </thead>
+        <tbody>
+        <tr th:each="destinasi, iterationStatus : ${listDestinasi}"
+            th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+          <td th:text="${iterationStatus.count}"></td>
+          <td th:text="${destinasi.noDestinasi}"></td>
+          <td th:text="${destinasi.negaraDestinasi}"></td>
+          <td th:if="${destinasi.isBebasVisa} == true">YA</td>
+          <td th:if="${destinasi.isBebasVisa} == false">TIDAK</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div th:unless="*{listDestinasi.size() != 0}">
+      <h2 th:text="'Tidak ada Destinasi'"></h2>
+    </div>
+  </div>
+  <br>
+  <div class ="container">
+    <a class="btn btn-primary" href="/">Home</a>
+  </div>
+  </body>
+</html>
+
+<!--<div class="container">-->
+<!--  <h2>Daftar Seluruh Destinasi</h2>-->
+<!--  <br>-->
+<!--  <div th:each="destinasi : ${listDestinasi}" class="card m-4 p-4">-->
+<!--    <div class="card-body">-->
+<!--      <div class="justify-content-center">-->
+<!--        <p th:text="'Nomor Destinasi : ' + ${destinasi.noDestinasi}"></p>-->
+<!--        <p th:text="'Negara Destinasi : ' + ${destinasi.negaraDestinasi}"></p>-->
+<!--        <p th:if="${destinasi.isBebasVisa == false}" th:text="'Bebas Visa : TIDAK'"></p>-->
+<!--        <p th:if="${destinasi.isBebasVisa == true}" th:text="'Bebas Visa : YA'"></p>-->
+<!--        <br>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <br>-->
+<!--  </div>-->
+<!--  <a class="btn btn-primary" href="/">Home</a>-->
+<!--</div>-->
+
+<!--</body>-->
+
+<!--</html>-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://thymeleaf.org">-->
+
+<!--<head>-->
+<!--  <title>PergiPergi</title>-->
+<!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"-->
+<!--        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
+<!--  <object th:include="fragments/fragment :: css" th:remove="tag"></object>-->
+<!--  <object th:include="fragments/fragment :: js" th:remove="tag"></object>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<nav th:replace="fragments/fragment :: navbar"></nav>-->
+<!--<div class="container">-->
+<!--  <h2>Daftar Seluruh Destinasi</h2>-->
+<!--  <br>-->
+<!--  <div th:if ="*{listDestinasi.size() != 0}">-->
+<!--    <table class="table">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>No</th>-->
+<!--        <th>Nomor Destinasi</th>-->
+<!--        <th>Negara Destinasi</th>-->
+<!--        <th>Bebas Visa</th>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr th:each="destinasi, iterationStatus : ${listDestinasi}"-->
+<!--          th:style="${iterationStatus.even} ? 'font-weight:bold;'">-->
+<!--        <td th:text="${iterationStatus.count}"></td>-->
+<!--        <td th:text="${destinasi.noDestinasi}"></td>-->
+<!--        <td th:text="${destinasi.negaraDestinasi}"></td>-->
+<!--        <td th:if="${destinasi.isBebasVisa} == 0">YA</td>-->
+<!--        <td th:if="${destinasi.isBebasVisa} == 1">TIDAK</td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+<!--  <div th:unless="*{listDestinasi.size() != 0}">-->
+<!--    <h2 th:text="'Tidak ada Destinasi'"></h2>-->
+<!--  </div>-->
+<!--</div>-->
+<!--&lt;!&ndash;  <div th:each="destinasi : ${listDestinasi}" class="card m-4 p-4">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="justify-content-center">&ndash;&gt;-->
+<!--&lt;!&ndash;        <p th:text="'Nomor Destinasi : ' + ${destinasi.noDestinasi}"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p th:text="'Negara Destinasi : ' + ${destinasi.negaraDestinasi}"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p th:if="${destinasi.isBebasVisa == 0}" th:text="'Bebas Visa : YA'"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p th:if="${destinasi.isBebasVisa == 1}" th:text="'Bebas Visa : TIDAK'"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <br>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--    <br>-->
+<!--  </div>-->
+<!--  <a class="btn btn-primary" href="/">Home</a>-->
+<!--</div>-->
+
+<!--</body>-->
+
+<!--</html>-->
