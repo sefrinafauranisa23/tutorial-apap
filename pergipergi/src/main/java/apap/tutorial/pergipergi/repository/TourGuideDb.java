@@ -1,5 +1,6 @@
 package apap.tutorial.pergipergi.repository;
 
+import apap.tutorial.pergipergi.model.DestinasiModel;
 import apap.tutorial.pergipergi.model.TourGuideModel;
 import apap.tutorial.pergipergi.model.TravelAgensiModel;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,4 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface TourGuideDb extends JpaRepository<TourGuideModel, Long> {
+    Optional<TourGuideModel> findByNoTourGuide(Long noTourGuide);
 }

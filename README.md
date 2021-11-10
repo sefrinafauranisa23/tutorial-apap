@@ -1,3 +1,63 @@
+## Tutorial 5 
+### What I have learned today
+- Belajar bagaimana mengimplementasikan web service
+- Belajar cara membuat dan mengakses web service dengan berbagai method yang ada
+- Belajar cara menggunakan postman
+
+### Pertanyaan
+
+1.Apa itu Postman? Apa kegunaannya?
+Postman adalah aplikasi yang berfungsi sebagai Rest Client. Aplikasi ini digunakan untuk uji coba Rest API. Postman biasa digunakan oleh pengembang pembuat API sebagai alat untuk menguji API yang telah dibuat. 
+
+Sumber : 
+https://antares.id/id/postman.html
+
+2. Jelaskan fungsi dari anotasi @JsonIgnoreProperties dan @JsonProperty.
+Fungsi :
+
+@JsonIgnoreProperties digunakan di tingkat kelas untuk menandai properti atau daftar properti yang akan diabaikan. @JsonIgnoreProperties dianotasi di tingkat kelas dan kita perlu menentukan properti logis dari kelas itu untuk mengabaikannya. @JsonIgnoreProperties memiliki elemen yang allowGetters, allowSetter, ignoreUnknown dan value. Elemen value di @JsonIgnoreProperties menentukan nama properti yang akan diabaikan.
+
+@JsonProperty mendefinisikan properti logis yang digunakan dalam serialisasi dan deserialisasi JSON. Ketika kita mengatur data JSON ke Objek Java, hal itu disebut deserialization JSON dan ketika kita mendapatkan data JSON dari Java Object, hal itu disebut serialisasi JSON. @JsonProperty dapat mengubah visibilitas properti logis menggunakan elemen aksesnya selama serialisasi dan deserialisasi JSON. @JsonProperty dapat dianotasi di non-static setter or getter method atau non-static object field.
+
+Sumber : 
+
+https://www.concretepage.com/jackson-api/jackson-jsonproperty-and-jsonalias-example
+
+https://www.tutorialspoint.com/jackson_annotations/jackson_annotations_jsonignoreproperties.htm
+
+https://www.concretepage.com/jackson-api/jackson-jsonignore-jsonignoreproperties-and-jsonignoretype
+
+3. Apa kegunaan atribut WebClient?
+
+WebClient adalah antarmuka yang mewakili titik masuk utama untuk melakukan web requests. WebClient dibuat sebagai bagian dari modul Spring Web Reactive, dan merupakan klien web non-pemblokiran (non-blocking) dan reaktif untuk melakukan HTTP request, memperlihatkan API reaktif yang fluent melalui HTTP client libraries seperti Reactor Netty.  
+
+Sumber :
+
+https://www.baeldung.com/spring-5-webclient
+
+https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/reactive/function/client/WebClient.html
+
+4. Apa itu ResponseEntity dan BindingResult? Apa kegunaannya? 
+
+ResponseEntity adalah ekstensi HttpEntity yang menambahkan HttpStatus status code. Digunakan di RestTemplate serta dalam @Controller method. ResponseEntity mewakili seluruh respons HTTP: kode status, header, dan isi. Kegunaannya adalah untuk manipulasi HTTP response dengan mengatur body, status dan header dari HTTP response.
+
+BindingResult adalah antarmuka umum yang merepresentasikan binding result (hasil meningkat). Kegunaannya adalah untuk memperluas antarmuka untuk kemampuan registrasi kesalahan, memungkinkan Validator untuk diterapkan, dan menambahkan analisis khusus pengikatan dan pembuatan model.
+
+Sumber :
+
+https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html
+
+https://www.baeldung.com/spring-response-entity
+
+https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/validation/BindingResult.html
+
+### What I did not understand
+- [ ] Masih belum sepenuhnya memahami mekanisme mengenai web service seutuhnya.
+(Anda dapat membuat tampilan code dalam README.md menjadi lebih baik. Cari tahu
+lebih dalam tentang penulisan README.md di GitHub pada link
+[berikut](https://help.github.com/en/articles/basic-writing-and-formatting-syntax))
+
+
 ## Tutorial 4
 
 ### What I have learned today
