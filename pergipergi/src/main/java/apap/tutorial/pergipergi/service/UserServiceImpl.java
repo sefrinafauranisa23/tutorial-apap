@@ -59,10 +59,4 @@ public class UserServiceImpl implements UserService{
         userDb.save(user);
     }
 
-    @Override
-    public boolean isMatch(String oldPassword, String newPassword) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.matches(newPassword, oldPassword);
-    }
-
 }

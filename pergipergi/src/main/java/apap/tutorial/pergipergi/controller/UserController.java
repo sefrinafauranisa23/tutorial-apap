@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -76,8 +77,9 @@ public class UserController {
         if (passwordLama == null || passwordBaru == null || passwordBaruConf == null) {
             return "form-ubah-password";
         }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserModel authUser = userService.findByUsername(auth.getName());
-        if(userService.isMatch(passwordLama,authUser.getPassword())) {
+        if(passwordEncoder.matches(passwordLama, authUser.getPassword())) {
             if (passwordBaru.equals(passwordBaruConf)) {
                 userService.findByUsername(auth.getName()).setPassword(userService.encrypt(passwordBaru));
                 userService.updateUser(userService.findByUsername(auth.getName()));
