@@ -1,3 +1,87 @@
+## Tutorial 6
+### What I have learned today
+- Perbedaan otentikasi dan otorisasi
+- Mengimplementasikan Spring Boot Starter Security
+- Membuat otorisasi fitur yang berbeda-beda untuk tiap role dari user
+- Menyimpan password milik user dalam bentuk hashed
+
+### Pertanyaan
+1.Jelaskan secara singkat perbedaan Otentikasi dan Otorisasi! Di bagian mana (dalam kode yang telah anda buat) konsep tersebut diimplementasi?
+
+Otentikasi adalah proses identifikasi pengguna apakah pengguna terdaftar dalam suatu sistem aplikasi. Proses otentikasi akan melakukan verifikasi terhadap siapa yang mencoba untuk mengakses sistem aplikasi (verifikasi identitas pengguna). 
+
+Otorisasi adalah proses menentukan apakah pengguna saat ini (yang sudah terotentikasi) diperbolehkan atau diberikan suatu akses untuk melakukan tugas/action tertentu ataukah tidak. Tugas/action ini dapat disebut juga melakukan manipulasi terhadap suatu sumber daya tertentu. 
+Untuk otentikasi, konsep tersebut diimplementasikan pada bagian ketika user ingin melakukan login. Ketika user memasukkan username dan password, username dan password tersebut akan dicek apakah terdapat pada database dari UserModel. Jika ya, maka user teridentifikasi sebagai pengguna yang terdaftar dalam suatu sistem aplikasi. Berikut ini adalah kodenya pada class WebSecurityConfig.java :
+![img.png](img.png)
+ 
+Untuk otorisasi, konsep tersebut diimplementasikan pada bagian ketika user ingin melakukan tugas/action tertentu, misalnya menambah destinasi. Pengguna yang boleh menambah destinasi hanya user yang memiliki role Agen. User dengan role lain hanya dapat melihat detail saja, namun tidak dapat mengakses atau melihat halaman tambah (termasuk tombol tambah). Hal tersebut diimplementasikan dengan pengecekan role Agen terlebih dahulu. Jika role sesuai, maka user dapat melakukan tugas/action atau melakukan manipulasi sumber daya tertentu pada aplikasi. Berikut ini adalah kodenya pada WebSecurityConfig.java :
+![img_1.png](img_1.png)
+
+Sumber :
+
+https://www.sailpoint.com/identity-library/difference-between-authentication-and-authorization/#:~:text=Simply%20put%2C%20authentication%20is%20the,a%20user%20has%20access%20to.
+
+
+2.Apa itu BCryptPasswordEncoder? Jelaskan secara singkat cara kerja dan tujuannya.
+
+BcryptPasswordEncoder adalah Implementasi PasswordEncoder yang menggunakan fungsi hashing kuat BCrypt. Klien dapat secara opsional menyediakan "kekuatan" (alias log rounds di BCrypt) dan instansi SecureRandom. Semakin besar parameter kekuatan, semakin banyak pekerjaan yang harus dilakukan (secara eksponensial) untuk meng-hash kata sandi. Nilai defaultnya adalah 10.
+Cara kerjanya yaitu BCryptPasswordEncoder secara otomatis menghasilkan dan menggunakan random salt untuk menghitung hash. Setiap panggilan, akan memiliki hasil yang berbeda, sehingga kita hanya perlu mengkodekan sandi sekali. Untuk membuat salt generation bekerja, BCrypt akan menyimpan salt didalam nilai hash itu sendiri. Misalnya, hash value nya adalah
+
+$2a$10$ZLhnHxdpHETcxmtEStgpI./Ri1mksgJ9iDP36FmfMdYyVg9g0b2dq
+
+1. "2a" mewakili versi algoritma Bcrypt
+2. "10" mewakili kekuatan algoritme
+3. "ZLhnHxdpHETcxmtEStgpI." adalah bagian generated salt. Pada dasarnya, 22 karakter pertama adalah salt. Bagian yang tersisa dari bidang terakhir adalah versi hash sebenarnya dari teks biasa. 
+
+Perlu diketahui juga bahwa algoritma BCrypt menghasilkan String dengan panjang 60, jadi kita perlu memastikan bahwa kata sandi akan disimpan dalam kolom yang dapat menampungnya. Kesalahan umum adalah membuat kolom dengan panjang yang berbeda dan kemudian mendapatkan kesalahan Nama Pengguna atau Kata Sandi Tidak Valid pada waktu otentikasi. 
+
+Aplikasi Spring Boot menggunakan BCryptPasswordEncoder dengan tujuan untuk menyandikan dan memvalidasi kata sandi pengguna untuk aplikasi tersebut. BCryptPasswordEncoder default adalah implementasi default dari algoritma BCrypt. Kelas BCryptPasswordEncoder memungkinkan kompleksitas algoritma pengkodean ditingkatkan dengan menggunakan nilai kekuatan sebagai argumen.
+
+Sumber :
+
+https://www.yawintutor.com/bcryptpasswordencoder-bad-strength/
+
+https://docs.spring.io/spring-security/site/docs/3.2.5.RELEASE/apidocs/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html
+
+https://www.baeldung.com/spring-security-registration-password-encoding-bcrypt
+
+3. Apakah penyimpanan password sebaiknya menggunakan encryption atau hashing? Mengapa demikian?
+
+Penyimpanan password sebaiknya menggunakan hashing, karena hashing adalah teknik enkripsi satu arah yang berarti bahwa tidak mungkin untuk merekayasa balik nilai hash untuk mendapatkan kembali teks asli (plain text) passwordnya. Password membutuhkan proses yang aman seperti itu. Kata sandi pengguna dijalankan melalui fungsi hash dan disimpan dalam database. Setiap kali pengguna masuk, database meng-hash kata sandi yang mereka masukkan dan memeriksa untuk melihat apakah hash yang dimasukkan cocok dengan hash yang mereka miliki di file. Jika ya, pengguna dapat masuk. Dengan hash, aplikasi/situs tidak pernah menyimpan kata sandi yang sebenarnya di mana pun, dan peretas yang membobol hanya akan mendapatkan daftar huruf dan angka yang tidak dapat didekodekan. Bergantung pada seberapa kuat algoritmanya, hash ini bisa sangat sulit untuk dipecahkan. 
+
+Sumber:
+
+https://www.maketecheasier.com/password-hashing-encryption/
+
+4. Jelaskan secara singkat apa itu UUID beserta penggunaannya!
+
+UUID adalah singkatan dari Universal Unique Identifier. UUID ini adalah angka 128-bit yang digunakan untuk mengidentifikasi secara unik suatu objek atau entitas di internet. UUID terdiri dari 16 oktet dan direpresentasikan sebagai 32 base-16 character, yang dapat digunakan untuk mengidentifikasi informasi lintas atau di seluruh sistem komputer. 
+
+UUID umumnya digunakan untuk mengidentifikasi informasi yang perlu unik dalam sistem atau jaringannya. Keunikannya membuatnya berguna untuk menjadi kunci asosiatif dalam database dan pengidentifikasi untuk perangkat keras fisik dalam suatu organisasi. 
+
+Sumber :
+
+https://searchapparchitecture.techtarget.com/definition/UUID-Universal-Unique-Identifier
+
+https://duo.com/labs/tech-notes/breaking-down-uuids
+
+5. Apa kegunaan class UserDetailsServiceImpl.java? Mengapa harus ada class tersebut padahal kita sudah memiliki class UserRoleServiceImpl.java?
+
+Class UserDetailsServiceImpl.java adalah sebuah class java yang mengimplementasikan interface UserDetailsService yang diimport dari org.springframework.security.core. UserDetailsServiceImpl.java berguna sebagai implementasi read-only method yaitu mengambil atau mengakses data pengguna (user-specific data) dalam database, dalam hal ini adalah database untuk UserModel (user). Nama methodnya adalah loadUserByUsername(String username) yang akan menemukan pengguna berdasarkan parameter username.  
+
+Kita tetap membutuhkan class tersebut karena UserDetailsServiceImpl.java dan UserRoleServiceImpl.java memiliki fungsi yang berbeda. UserRoleServiceImpl.java berfungsi sebagai akses kepada database untuk RoleModel (role) sedangkan UserDetailsServiceImpl.java berfungsi sebagai akses kepada database untuk UserModel (user). Selain itu, UserDetailsServiceImpl.java sangat penting karena digunakan sebagai sarana otentikasi pengguna aplikasi dengan cara mengakses data UserModel dalam database. 
+
+Sumber :
+
+https://docs.spring.io/spring-security/site/docs/3.0.x/apidocs/org/springframework/security/core/userdetails/UserDetailsService.html
+
+### What I did not understand
+- [ ] Penggunaan Spring Boot Starter Security secara lebih mendalam.
+(Anda dapat membuat tampilan code dalam README.md menjadi lebih baik. Cari tahu
+lebih dalam tentang penulisan README.md di GitHub pada link
+[berikut](https://help.github.com/en/articles/basic-writing-and-formatting-syntax))
+
+
 ## Tutorial 5 
 ### What I have learned today
 - Belajar bagaimana mengimplementasikan web service

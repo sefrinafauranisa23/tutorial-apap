@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -10,6 +10,7 @@
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div class="d-flex justify-content-center">
   <div class="m-4">
+      <h2 th:text="'Hello '+${#httpServletRequest.remoteUser}+'!'">Masuk sebagai</h2>
     <h2>Selamat datang di PergiPergi!</h2>
     <div class ="d-flex justify-content-center">
       <a th:href="@{/agensi/viewall}" class="mx-2 btn btn-primary">View All Agensi</a>
@@ -17,9 +18,18 @@
     </div>
     <div class ="my-3 d-flex justify-content-center">
       <a th:href="@{/destinasi/viewall}" class="mx-2 btn btn-primary">View All Destinasi</a>
-      <a th:href="@{/destinasi/add}" class="mx-2 btn btn-outline-primary">Add Destinasi</a>
+        <a th:if="${currRole.equals('Agen')}" th:href="@{/destinasi/add}" class="mx-2 btn btn-outline-primary">Add Destinasi</a>
     </div>
+      <div class ="my-3 d-flex justify-content-center">
+          <a th:if="${currRole.equals('Admin')}" th:href="@{/user/viewall}" class="mx-2 btn btn-primary">View All User</a>
+      </div>
+      <div class ="my-3 d-flex justify-content-center">
+          <a th:href="@{/user/ubah-password}" class="mx-2 btn btn-primary">Ubah Password</a>
+      </div>
   </div>
+</div>
+<div class="my-3 d-flex justify-content-center">
+    <a th:if="${currRole.equals('Admin')}" th:href="@{/user/add}" class ="mx-2 btn btn-outline-primary">Tambah user</a>
 </div>
 <!--<div class="container">-->
 <!--  <div class="card m-4 p-4">-->
