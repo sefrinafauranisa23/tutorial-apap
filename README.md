@@ -1,3 +1,123 @@
+## Tutorial 7
+### What I have learned today
+1. Mengenal dan menggunakan ReactJS
+2. Belajar istilah, arsitektur, dan design di ReactJS
+3. Belajar perbedaan class component dan functional component
+4. Belajar perbedaan state dan props
+
+### Pertanyaan
+1.Jelaskan apa yang Anda lakukan di latihan dalam satu paragraf per-soal. Berikan screenshot sebagai ilustrasi dari apa yang Anda jelaskan.
+
+Soal 1 : hapus item dari cart dengan button delete dan menampilkan kembali tombol keranjang
+
+Pertama, saya membuat suatu handler untuk menghapus item dari cart bernama “handleDeleteItemFromCart” yang dipanggil ketika button delete diklik pada kode dibawah ini:  
+
+![img_10.png](img_10.png)
+
+Button delete tersebut berasal dari fungsi CustomIconButton pada komponen Item 
+
+![img_11.png](img_11.png)
+
+Handler “handleDeleteItemFromCart” berisi suatu algoritma yang akan menghapus item dari MyCart. Berikut ini adalah isi dari handler “handleDeleteItemFromCart” :
+ 
+![img_12.png](img_12.png)
+
+*Catatan : untuk bagian balance dapat diabaikan terlebih dahulu 
+
+Pada handler tersebut, pertama, array cartItems di copy dan dimasukkan dalam variabel nowItems untuk menyimpan list item yang saat ini masuk dalam My Cart. Kedua, copy objek item yang akan dihapus lalu dimasukkan dalam variabel delItem untuk menyimpan item yang akan dihapus dari cart ketika button delete di click. Lalu, kita ubah atribut inCart dari item yang dihapus menjadi false untuk menunjukkan bahwa item dihilangkan dari cart. Selanjutnya, buat suatu array “baru” yang memfilter item berdasarkan id nya, yaitu masukkan semua item selain item yang memiliki id seperti item yang akan didelete, yang berarti kita akan menghilangkan item dari My Cart. Lalu, kita lakukan set state (mengatur status) dari array cartItems dengan array “baru” tersebut. Sehingga, saat ini array cartItems berisi semua item dalam cart, kecuali yang sudah dihapus. Selanjutnya, item yang dihapus dari cart tersebut akan diupdate di shopItems dengan nilai atribut inCart yang false melalui handler updateShopItem yang berisi seperti ini :
+
+![img_13.png](img_13.png)
+
+Nilai atribut inCart yang false tersebut akan membuat item yang dihapus dari cart tersebut kembali memiliki icon tombol keranjang pada halaman List Item melalui kode yang terdapat pada screenshot CustomIconButton yang sudah dilampirkan di atas. 
+
+Soal 2 : mengurangi balance saat item masuk keranjang dan menambah balance saat item keluar keranjang
+
+Untuk mengurangi balance saat item masuk keranjang, saya memasukkan algoritma set state balance di handler “handleDeleteItemFromCart” dan handler ”handleAddItemToCart”. Pada handleDeleteItemFromCart, saya melakukan set state balance (mengatur status balance) dengan nilai status balance saat ini (this.state.balance) ditambah dengan harga dari item yang akan dihapus dari My Cart (delItem.price). Hal tersebut menunjukkan bahwa ketika item dihapus dari My Cart, maka uang (balance) juga bertambah sesuai harga itemnya. Berikut ini adalah kodenya :
+
+![img_14.png](img_14.png)
+
+Pada handleAddItemToCart, saya melakukan set state balance dengan status balance saat ini (this.state.balance) dikurangi dengan harga dari item yang akan ditambah ke cart (newItem.price). Hal tersebut menunjukkan bahwa ketika item ditambah ke My Cart, maka uang juga berkurang sesuai harga item tersebut. Berikut ini adalah kodenya :
+ 
+![img_15.png](img_15.png)
+
+Soal 3 : Alert bahwa balance tidak cukup
+
+Untuk memunculkan bahwa balance tidak cukup, saya membuat suatu algoritma di handler “handleAddItemToCart” yang mengecek apakah status balance saat ini (this.state.balance) lebih besar atau sama dengan harga item yang akan ditambah (newItem.price). Jika iya, tandanya uang masih mencukupi untuk membeli item. Maka, item dapat dimasukkan ke My Cart. Namun jika tidak (else), maka berarti bahwa uang sudah tidak mencukupi untuk membeli item (memasukkan item ke cart) sehingga perlu diberikan alert bahwa uang tidak mencukupi (“Balance not sufficient!”). Berikut ini adalah kodenya :
+
+![img_16.png](img_16.png)
+
+2.Menurut pemahaman kamu selama pengerjaan tutorial ini, apa perbedaan antara state dan props?
+
+Props :
+
+1. Data di-passing dari satu komponen ke komponen lainnya.
+2. Immutable (tidak dapat dimodifikasi)
+3. Dapat digunakan dengan state dan functional components
+4. Hanya dapat dibaca (read-only)
+
+State :
+1. Data di-passing dalam komponen saja
+2. Mutable (dapat dimodifikasi)
+3. Hanya dapat digunakan dengan state component atau class component
+4. Dapat dibaca dan ditulis
+
+Sumber : 
+
+Pemahaman sendiri 
+
+https://www.geeksforgeeks.org/what-are-the-differences-between-props-and-state/
+
+3. Menurut kamu, apakah sebaiknya kita menggunakan component (e.g. List, Item) dalam React? sebutkan alasannya.
+
+Ya, kita sebaiknya menggunakan component (e.g. List, Item)  dalam React yang dapat berbentuk class atau function tersebut utamanya agar lebih modular (setiap komponen memiliki fungsinya masing-masing) dan kode yang lebih reusable. Setiap class atau function tersebut menyediakan fungsi yang berbeda-beda sehingga lebih mudah dalam mengatur apabila terdapat perubahan atau kesalahan. Mereka melayani tujuan yang sama seperti fungsi JavaScript namun bekerja secara terpisah dan mengembalikan HTML. Component ini membuat kode lebih mudah dibaca, dimengerti, dan ditest. 
+
+Sumber :
+
+https://reactjs.org/docs/react-component.html
+https://www.w3schools.com/react/react_components.asp
+
+4. Apa perbedaan class component dan functional component?
+
+Functional component :
+
+1. Hanya suatu fungsi JavaScript biasa yang menerima props sebagai argumen dan mengembalikan elemen React.
+2. Tidak ada method render yang digunakan.
+3. Juga dikenal sebagai komponen Stateless karena mereka hanya menerima data dan menampilkannya dalam beberapa bentuk, yang terutama bertanggung jawab untuk merender UI.
+4. Didalamnya tidak dapat digunakan react lifecycle method (seperti componentDidMount)
+5. Hooks dapat dengan mudah digunakan
+6. Constructor tidak digunakan
+
+Class component :
+
+1. Harus meng-extend dari React. Komponen dan buat fungsi render yang mengembalikan elemen React.
+2. Harus terdapat method render() yang mengembalikan HTML.
+3. Juga dikenal sebagai komponen Stateful karena mereka mengimplementasikan logika dan status.
+4. Dapat menggunakan react lifecycle method di dalam classnya (seperti componentDidMount)
+5. Membutuhkan sintaks yang berbeda untuk mengimplementasikan hooks
+6. Constructor digunakan karena perlu menyimpan status
+
+Sumber :
+
+https://www.geeksforgeeks.org/differences-between-functional-components-and-class-components-in-react/
+
+5. Dalam react, apakah perbedaan component dan element?
+
+Element dalam react adalah objek biasa yang menggambarkan instance komponen atau simpul DOM dan properti yang diinginkan. Element hanya berisi informasi tentang jenis komponen (misalnya, Tombol), propertinya (misalnya, warnanya), dan elemen turunan apa pun di dalamnya. Sebuah elemen adalah cara untuk memberi tahu React apa yang ingin ditampilkan pada layar. Kita tidak dapat memanggil metode apa pun pada elemen. Element hanya objek deskripsi yang tidak dapat diubah dengan memiliki 2 field: type: (string | ReactClass) dan props: Object1. Element dapat merepresentasikan DOM element maupun component element. 
+
+Component dalam react adalah fungsi atau class yang menerima input (props) dan mengembalikan react element sebagai output. Component dapat berupa class yang meng-extend React.Component dengan fungsi render() sebagai class component, atau komponen fungsional yang stateless sebagai functional component. Dibutuhkan props sebagai input dan return elemen sebagai output. Nama komponen dimulai dengan huruf kapital. Class component sedikit lebih kuat daripada functional component karena dapat menyimpan beberapa keadaan lokal dan melakukan logika khusus ketika simpul DOM yang sesuai dibuat atau dihancurkan. Functional component kurang kuat tetapi lebih sederhana, dan bertindak seperti class component hanya dengan satu metode render(). 
+
+Sumber :
+
+https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html
+
+### What I did not understand
+- [ ] Penggunaan ReactJS secara lebih mendalam.
+(Anda dapat membuat tampilan code dalam README.md menjadi lebih baik. Cari tahu
+lebih dalam tentang penulisan README.md di GitHub pada link
+[berikut](https://help.github.com/en/articles/basic-writing-and-formatting-syntax))
+
+ ---
+
 ## Tutorial 6
 ### What I have learned today
 - Perbedaan otentikasi dan otorisasi
