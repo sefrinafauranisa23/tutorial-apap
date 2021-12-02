@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../button";
 import classes from "./styles.module.css";
 const Item = (props) => {
-  const { id, title, price, description, category, quantity, handleEdit, handleDelete, inCart, handleAdd, qCart } = props;
-  const handleSubmit = (value) => {
-    this.props.qCart(value);
-  };
+  const { id, title, price, description, category, quantity, handleEdit, handleDelete, handleAdd } = props;
+  const [qCart, setQCart] = useState(0);
 
   return (
     <div className={classes.item}>
@@ -17,10 +15,10 @@ const Item = (props) => {
       <p>{`stok: ${quantity}`}</p>
       <Button action={handleEdit}>Edit</Button>
       <Button action={handleDelete}>Delete</Button>
-      <form>
-        <input type="number" placeholder="Type quantity" value={qCart} onChange={(e) => handleSubmit(e.target.value)} />
-        <Button action={handleAdd}>Add To Cart</Button>
-      </form>
+      <div>
+        <input type="number" placeholder="Type quantity" value={qCart} onChange={(e) => setQCart(e.target.value)} />
+        <Button action={() => handleAdd(id, qCart, quantity)}>Add To Cart</Button>
+      </div>
     </div>
   );
 };

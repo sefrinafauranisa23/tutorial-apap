@@ -8,6 +8,11 @@ import Badge from "@material-ui/core/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Fab } from "@material-ui/core";
 import ViewStreamIcon from "@mui/icons-material/ViewStream";
+import CartItem from "../../components/cartItem";
+import { ProductionQuantityLimitsOutlined } from "@mui/icons-material";
+import ItemCart from "../../components/itemcart";
+import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 class ItemList extends Component {
   constructor(props) {
@@ -24,7 +29,7 @@ class ItemList extends Component {
       category: "",
       quantity: 0,
       searchInput: "",
-      qCart: 0,
+      totalHarga: 0,
       cartItems: [],
       cartHidden: true,
     };
@@ -35,11 +40,15 @@ class ItemList extends Component {
     this.handleEditItem = this.handleEditItem.bind(this);
     this.handleSubmitItem = this.handleSubmitItem.bind(this);
     this.handleSubmitEditItem = this.handleSubmitEditItem.bind(this);
+    this.handleAddItemToCart = this.handleAddItemToCart.bind(this);
+    this.handleDeleteItem = this.handleDeleteItem.bind(this);
     this.loadData = this.loadData.bind(this);
+    this.loadDataCart = this.loadDataCart.bind(this);
   }
 
   componentDidMount() {
     this.loadData();
+    this.loadDataCart();
   }
 
   handleToggle = () => {
@@ -51,6 +60,16 @@ class ItemList extends Component {
     try {
       const { data } = await APIConfig.get("/item");
       this.setState({ items: data.result });
+    } catch (error) {
+      alert("Oops terjadi masalah pada server");
+      console.log(error);
+    }
+  }
+
+  async loadDataCart() {
+    try {
+      const { data } = await APIConfig.get("/cart");
+      this.setState({ cartItems: data.result });
     } catch (error) {
       alert("Oops terjadi masalah pada server");
       console.log(error);
@@ -116,7 +135,7 @@ class ItemList extends Component {
   }
 
   handleAddItem() {
-    this.setState({ isCrzeate: true });
+    this.setState({ isCreate: true });
   }
 
   handleCancel(event) {
@@ -147,29 +166,30 @@ class ItemList extends Component {
     });
   }
 
-  handleAddItemToCart(item) {
-    const newItems = [...this.state.cartItems];
-    const newItem = { ...item };
-    const targetInd = newItems.findIndex((it) => it.id === newItem.id);
-    if (targetInd < 0) {
-      if (item.quantity >= this.state.qCart) {
-        newItem.inCart = true;
-        newItems.push(newItem);
-        this.updateShopItem(newItem, true);
-        item.quantity -= this.state.qCart;
+  async handleAddItemToCart(id, qCart, quantity) {
+    const newItems = this.state.cartItems;
+    const baru = newItems.filter((it) => it.item.id === id)[0];
+    const q = baru ? baru.quantity : 0;
+    console.log(quantity);
+    console.log(q + qCart);
+    console.log(qCart);
+    try {
+      if (quantity - qCart - q >= 0) {
+        const data = {
+          idItem: id,
+          quantity: qCart,
+        };
+        await APIConfig.post("/cart", data);
+        this.loadDataCart();
+        alert("Behasil ditambahkan");
       } else {
         alert("Stok tidak cukup");
       }
+    } catch (error) {
+      alert("Oops terjadi masalah pada server");
+      console.log(error);
     }
-    this.setState({ cartItems: newItems });
   }
-
-  updateShopItem = (item, inCart) => {
-    const tempShopItems = this.state.items;
-    const targetInd = tempShopItems.findIndex((it) => it.id === item.id);
-    tempShopItems[targetInd].inCart = inCart;
-    this.setState({ shopItems: tempShopItems });
-  };
 
   async searchItems(searchValue) {
     console.log(searchValue);
@@ -180,69 +200,61 @@ class ItemList extends Component {
     this.setState({ items: baru });
   }
 
+  async handleDeleteItem(item) {
+    try {
+      await APIConfig.delete("/item/" + item.id);
+      this.loadData();
+    } catch (error) {
+      alert("Oops terjadi masalah pada server");
+      console.log(error);
+    }
+  }
+
   render() {
     return (
       <div className="container pt-3">
         <div className="row mt-3">
-          {!this.state.cartHidden ? (
-            <div className="col-sm">
-              <div className={classes.itemList}>
-                <h1 className={classes.title}>Cart Items</h1>
-                <div style={{ position: "fixed", top: 25, right: 25 }}>
-                  <Button variant="contained">CHECKOUT</Button>
-                </div>
-                <div style={{ position: "fixed", top: 25, left: 25 }}>
-                  <Button variant="contained">BACK</Button>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className={classes.itemList}>
-              <h1 className={classes.title}>All Items</h1>
-              <div style={{ position: "fixed", top: 25, right: 25 }}>
+          <div className={classes.itemList}>
+            <h1 className={classes.title}>All Items</h1>
+            <div style={{ position: "fixed", top: 25, right: 25 }}>
+              <Link to="/list-cart">
                 <Fab variant="extended" onClick={this.handleToggle}>
-                  {this.state.cartHidden ? (
-                    <Badge color="secondary" badgeContent={this.state.cartItems.length}>
-                      <ShoppingCartIcon />
-                    </Badge>
-                  ) : (
-                    <ViewStreamIcon />
-                  )}
+                  <Badge color="secondary" badgeContent={this.state.cartItems.length}>
+                    <ShoppingCartIcon />
+                  </Badge>
                 </Fab>
-              </div>
-              <input type="text" placeholder="Search" value={this.state.searchInput} onChange={(e) => this.searchItems(e.target.value)} />
-              {/* <CInputGroup className="mb-3">
-          <CFormInput placeholder="Type title of product" aria-label="title" aria-describedby="basic-addon1" value={this.state.searchInput} onChange={(e) => this.searchItems(e.target.value)} />
-        </CInputGroup> */}
-              <Button action={this.handleAddItem}>Add Item</Button>
-              <div>
-                {this.state.items.map((item) => (
-                  <Item
-                    key={item.id}
-                    id={item.id}
-                    title={item.title}
-                    price={item.price}
-                    description={item.description}
-                    category={item.category}
-                    quantity={item.quantity}
-                    handleEdit={() => this.handleEditItem(item)}
-                    handleAdd={() => this.handleAddItemToCart(item)}
-                  />
-                ))}
-              </div>
-              <Modal show={this.state.isCreate || this.state.isEdit} handleCloseModal={this.handleCancel} modalTitle={this.state.isCreate ? "Add Item" : `Edit Item ID ${this.state.id}`}>
-                <form>
-                  <input className={classes.textField} type="text" placeholder="Nama Item" name="title" value={this.state.title} onChange={this.handleChangeField} />
-                  <input className={classes.textField} type="number" placeholder="Harga" name="price" value={this.state.price} onChange={this.handleChangeField} />
-                  <textarea className={classes.textField} placeholder="Deskripsi" name="description" rows="4" value={this.state.description} onChange={this.handleChangeField} />
-                  <input className={classes.textField} type="text" placeholder="Kategori" name="category" value={this.state.category} onChange={this.handleChangeField} />
-                  <input className={classes.textField} type="number" placeholder="qty" name="quantity" value={this.state.quantity} onChange={this.handleChangeField} />
-                  <Button action={this.state.isCreate ? this.handleSubmitItem : this.handleSubmitEditItem}>Create</Button>
-                  <Button action={this.handleCancel}>Cancel</Button>
-                </form>
-              </Modal>
+              </Link>
             </div>
-          )}
+            <input className={classes.textField} placeholder="Search" value={this.state.searchInput} onChange={(e) => this.searchItems(e.target.value)} />
+            <Button action={this.handleAddItem}>Add Item</Button>
+            <div>
+              {this.state.items.map((item) => (
+                <Item
+                  key={item.id}
+                  id={item.id}
+                  title={item.title}
+                  price={item.price}
+                  description={item.description}
+                  category={item.category}
+                  quantity={item.quantity}
+                  handleEdit={() => this.handleEditItem(item)}
+                  handleDelete={() => this.handleDeleteItem(item)}
+                  handleAdd={this.handleAddItemToCart}
+                />
+              ))}
+            </div>
+            <Modal show={this.state.isCreate || this.state.isEdit} handleCloseModal={this.handleCancel} modalTitle={this.state.isCreate ? "Add Item" : `Edit Item ID ${this.state.id}`}>
+              <form>
+                <input className={classes.textField} type="text" placeholder="Nama Item" name="title" value={this.state.title} onChange={this.handleChangeField} />
+                <input className={classes.textField} type="number" placeholder="Harga" name="price" value={this.state.price} onChange={this.handleChangeField} />
+                <textarea className={classes.textField} placeholder="Deskripsi" name="description" rows="4" value={this.state.description} onChange={this.handleChangeField} />
+                <input className={classes.textField} type="text" placeholder="Kategori" name="category" value={this.state.category} onChange={this.handleChangeField} />
+                <input className={classes.textField} type="number" placeholder="qty" name="quantity" value={this.state.quantity} onChange={this.handleChangeField} />
+                <Button action={this.state.isCreate ? this.handleSubmitItem : this.handleSubmitEditItem}>Create</Button>
+                <Button action={this.handleCancel}>Cancel</Button>
+              </form>
+            </Modal>
+          </div>
         </div>
       </div>
     );
