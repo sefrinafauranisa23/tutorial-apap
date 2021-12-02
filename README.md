@@ -1,3 +1,94 @@
+## Tutorial 8
+### What I have learned today
+- Lifecycle pada sebuah component
+- Routing di react app
+- Axios dan cara untuk memproses request tersebut.
+
+### Pertanyaan
+1.Ceritakan langkah - langkah yang kalian lakukan untuk solve LATIHAN no.1, dan mengapa kalian melakukan langkah - langkah tersebut?
+
+Pada latihan 1, diceritakan pada tutorial bahwa setelah melakukan submit (tidak di-refresh),  klik lagi tombol “Add New Item” akan dijumpai bahwa form masih berisi value dari item sebelumnya yang ditambahkan. Hal tersebut tersebut terjadi karena pada handler handleSubmitItem() setelah data item di post ke API, tidak ada setState untuk mereset value dari masing-masing state seperti title, price, description, category, dan quantity. Akibatnya, ketika selesai melakukan submit item lalu klik Add Item kembali (tanpa refresh) dan modal muncul, modal masih mengandung nilai state dari item sebelumnya yang di-submit. 
+Langkah-langkah yang saya lakukan untuk solve latihan no 1 adalah dengan menambahkan setState untuk masing-masing state setelah data item di post ke API seperti kode di bawah ini :
+
+![img_17.png](img_17.png)
+
+Sebelumnya, pada const data, masing-masing state di set sesuai data dari item yang dipassing ke handler tersebut. Setelah itu, const data di post ke API untuk menambahkan item ke daftar item di database. Setelah itu, ditambahkan setState untuk mereset nilai dari masing-masing state menjadi seperti semula. Hal ini dilakukan agar ketika kita menge-klik Add Item, modal tidak memunculkan nilai dari item sebelumnya. Modal mengambil nilai dari masing-masing state berdasarkan nilainya saat itu dan nilai saat itu sudah direset menjadi seperti semula sehingga tidak mengandung data item sebelumnya. Lalu, data daftar item diload kembali. 
+
+2. Jelaskan fungsi dari async dan await!
+-	Async/Await adalah salah satu cara untuk mengatasai masalah asynchronous pada Javascript berupa syntax khusus yang digunakan untuk bekerja dengan Promise agar lebih nyaman dan mudah untuk digunakan. Async/Await terbagi menjadi Async dan Await.
+-	Async merupakan sebuah fungsi yang mengembalikan sebuah Promise. Async ditambahkan didepan suatu function yang berfungsi untuk menjadikan function tersebut asinkronus. 
+-	Await sendiri merupakan fungsi yang hanya berjalan di dalam Async. Await digunakan pada function yang menggunakan Async dan berfungsi untuk menunda eksekusi hingga proses asinkronus selesai, artinya kode setelah baris yang mengandung Await tidak akan dieksekusi sampai proses di Await selesai (menunda jalannya Async hingga proses dari Await berhasil di eksekusi). 
+
+Sumber : 
+
+https://www.kawankoding.id/javascript-async-await/
+
+https://www.matawebsite.com/blog/mengenal-async-await-javascript
+
+3. Masukkan jawaban dari Screenshot yang diperintahkan di halaman 9 pada Component Lifecycle pada pertanyaan ini.
+1) Menambahkan kode di file index.js di folder ItemList
+![img_18.png](img_18.png)
+![img_19.png](img_19.png)
+
+2) Membuka terminal / command line, pindah ke folder frontend-minicommerce, lalu jalankan npm start
+![img_20.png](img_20.png)
+
+3) Membuka browser (jika tidak terbuka secara otomatis), lalu masukkan url http://localhost:3000/. Setelah itu, buka inspect element, kemudian arahkan ke tab console .
+![img_21.png](img_21.png)
+
+4) Terdapat render() dan componentDidMount(), namun tidak terdapat shouldComponentUpdate() 
+5) shouldComponentUpdate hanya akan dipanggil ketika props atau state dari sebuah Component berubah, sedangkan kita tidak mengubah props atau state pada komponen Items tersebut
+6) Menambahkan isLoading pada state pada komponen ItemList
+![img_22.png](img_22.png)
+
+7) Menambahkan sebuah handler dan button untuk mengubah isLoading yang ada pada state
+![img_23.png](img_23.png)
+
+Melakukan binding method ke Class Component.
+![img_24.png](img_24.png)
+
+8) Membuka browser dan akan muncul sebuah button baru sesuai spesifikasi
+![img_25.png](img_25.png)
+
+9) Klik tombol changeState dan lihat apa yang terjadi pada console. shouldComponentUpdate() kini hadir disana dan terlihat bahwa value dari isLoading berubah setiap di klik
+![img_26.png](img_26.png)
+![img_27.png](img_27.png)
+![img_28.png](img_28.png)
+ 
+   
+
+4. Jelaskan fungsi dari componentDidMount, shouldComponentUpdate, componentDidUpdate, componentWillReceiveProps, componentWillUnmount.
+Notes : Penjelasan harus mencantumkan “kapan fungsi dipanggil” dan “use case apa saja yang biasanya menggunakan lifecycle method tersebut”. 
+ 
+Fase mounting adalah fase ketika components dibuat atau pertama kali dirender ke DOM. Fase updating adalah fase ketika sebuah component akan di render ulang, biasanya ini terjadi ketika ada perubahan pada state atau props yang mengakibatkan perubahan DOM. Fase unmounting adalah fase ketika component dihapus dari DOM.
+
+Fungsi dari :
+
+componentDidMount => adalah salah satu fungsi/method pada fase mounting (berperan untuk membuat components). Fungsi ini dipanggil ketika kita ingin mengakses dan memanipulasi DOM sebelum elemen UI/JSX dimuat. Contoh use case yang menggunakan fungsi ini adalah request data dari API menggunakan Axios, pembuatan component, dan load data API. 
+
+shouldComponentUpdate => adalah salah satu fungsi/method pada fase updating. Fungsi ini dipanggil ketika akan menentukan apakah sebuah component akan di render ulang atau tidak. Method ini akan mengembalikan nilai boolean true & false, jika true maka component akan di render ulang atau sebaliknya. Contoh use case yang menggunakan fungsi ini adalah ketika akan memeriksa apakah ada perubahan pada suatu properti tertentu yang menentukan apakah suatu komponen akan diperbarui. 
+
+componentDidUpdate => adalah salah satu fungsi/method pada fase updating. Fungsi ini dipanggil ketika ingin mengakses dan memanipulasi DOM serta request data setelah fungsi render dipanggil dan segera setelah component diperbarui. Contoh use case yang menggunakan fungsi ini adalah mengupdate size suatu component ketika suatu button sudah di click atau mengupdate elemen HTML lainnya setelah data diperbarui. 
+
+componentWillReceiveProps => adalah salah satu fungsi/method pada fase updating. Fungsi ini dipanggil ketika state yang ada di component akan di update atau di ubah dengan nilai props yang baru. Contoh use case yang menggunakan fungsi ini adalah mengupdate component sesuai nilai props atau reset state sesuai nilai prop. 
+
+componentWillUnmount => adalah salah satu fungsi/method pada fase unmounting. Fungsi ini dipanggil ketika sebuah component ingin dihapus dari DOM dan dipanggil segera sebelum component dilepas dan dihancurkan. Contoh use case yang menggunakan fungsi ini adalah membatalkan timer, membatalkan network request, dan menghapus apapun yang dibuat pada componentDidMount().
+
+Sumber :
+
+https://reactjs.org/docs/react-component.html
+
+https://medium.com/codeacademia/apa-itu-component-lifecycle-di-react-bfcb64f64e0e
+
+https://www.konsepkoding.com/2020/03/tutorial-dan-penjelasan-lifecycle-reactnative.html
+
+### What I did not understand
+- [ ] Algoritma dan syntax yang digunakan di react app secara mendalam
+(Anda dapat membuat tampilan code dalam README.md menjadi lebih baik. Cari tahu
+lebih dalam tentang penulisan README.md di GitHub pada link
+[berikut](https://help.github.com/en/articles/basic-writing-and-formatting-syntax))
+
+---
 ## Tutorial 7
 ### What I have learned today
 1. Mengenal dan menggunakan ReactJS
