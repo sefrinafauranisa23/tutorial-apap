@@ -181,9 +181,9 @@ class ItemList extends Component {
         };
         await APIConfig.post("/cart", data);
         this.loadDataCart();
-        alert("Behasil ditambahkan");
+        alert("Item behasil ditambahkan ke cart");
       } else {
-        alert("Stok tidak cukup");
+        alert("Stok tidak memenuhi");
       }
     } catch (error) {
       alert("Oops terjadi masalah pada server");
